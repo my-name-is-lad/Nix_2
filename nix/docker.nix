@@ -1,7 +1,6 @@
 { imageTag ? null }:
 
 with import ./stackyaml.nix {};
-with import ./git-rev.nix;
 
 let
   dockerTools = pkgs.dockerTools;
@@ -22,10 +21,9 @@ let
       config.Cmd = entryPoint;
     };
 
-  gitHash = "${gitRev sourceCode.outPath}";
   hello-world = project.hello-world.components.exes.hello-world;
   helloImage = makeDockerImage "hello" 
-    (if imageTag == null then gitHash else imageTag)
+    (if imageTag == null then "undefined" else imageTag)
     [ hello-world ]
     [ "${hello-world}/bin/hello-world"
     ];

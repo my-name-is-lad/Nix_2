@@ -6,18 +6,18 @@
 }:
 
 let
-  sourceCode = pkgs.haskell-nix.haskellLib.cleanGit {
-    name = "hello-world";
-    src = ../.;
-    keepGitDir = true;
-  };
   project = pkgs.haskell-nix.stackProject {
     name = "hello-world";
-    src = sourceCode;
+    src = pkgs.haskell-nix.haskellLib.cleanGit {
+      name = "hello-world";
+      src = ../.;
+      keepGitDir = true;
+    };
 
     modules = [{
       doCheck = false;
+      packages.hello-world.components.exes.hello-world.ghcOptions = [ "-Werror" ];
     }];
   };
 
-in { inherit project; inherit sourceCode; inherit pkgs; }
+in { inherit project; inherit pkgs; }
