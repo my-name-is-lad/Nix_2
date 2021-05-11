@@ -32,6 +32,24 @@ packages:
 - hello-world
 ```
 
+Рецепт сборки конкретного пакета находится в `hello-world.cabal`:
+```
+cabal-version:      2.4
+name:               hello-world
+version:            1.0
+synopsis:           Hello World
+license:            MIT
+license-file:       LICENSE
+author:             Nick
+
+executable hello-world
+    main-is:          Main.hs
+    build-depends:    base >= 4 && < 5
+    hs-source-dirs:   src
+    default-language: Haskell2010
+    ghc-options:      -Wall -O2
+```
+
 Из `stack.yaml` наш код на Nix и будет черпать информацию о том, что именно и как собирать. В качестве эксперимента, можем проверить, что наш код действительно запускается и работает:
 
 ```
